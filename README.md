@@ -15,10 +15,6 @@ This WebPart uses React-Bootstrap version 2 to display SharePoint list items. Th
 <img width="906" alt="image" src="https://github.com/angularfirst/React-Accordion/assets/30344092/0076893c-9b72-47d7-b115-c1cbddc648b6">
 <img width="907" alt="image" src="https://github.com/angularfirst/React-Accordion/assets/30344092/ac596e24-e163-4116-9319-fac430d5d478">
 
-
-
-[picture of the solution in action, if possible]
-
 ## Used SharePoint Framework Version
 
 ![version](https://img.shields.io/badge/version-1.18.2-green.svg)
