@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "met-accordion-client-side-solution",
+    "id": "e94def48-8357-4e9a-beb5-3d4a8ee2767b",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.18.2"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "met-accordion description"
+      },
+      "longDescription": {
+        "default": "met-accordion description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "met-accordion Feature",
+        "description": "The feature that activates elements of the met-accordion solution.",
+        "id": "672ff47f-924c-4e4f-9f79-d1f11e49191e",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/met-accordion.sppkg"
+  }
+}

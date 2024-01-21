@@ -1,0 +1,21 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "nodeVersion": "18.19.0",
+    "sdksVersions": {
+      "@microsoft/microsoft-graph-client": "3.0.2",
+      "@microsoft/teams-js": "2.12.0"
+    },
+    "version": "1.18.2",
+    "libraryName": "met-accordion",
+    "libraryId": "e94def48-8357-4e9a-beb5-3d4a8ee2767b",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "met-accordion",
+    "solutionShortDescription": "met-accordion description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}
