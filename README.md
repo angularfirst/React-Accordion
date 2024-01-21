@@ -69,7 +69,6 @@ This WebPart uses React-Bootstrap version 2 to display SharePoint list items. Th
   - **gulp bundle --ship**
   - **gulp package-solution --ship** (to create a solution and upload it to your tenant AppCatalog)
 
-> Include any additional steps as needed.
 
 ## Features
 
