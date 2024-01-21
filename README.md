@@ -39,7 +39,7 @@ This WebPart uses React-Bootstrap version 2 to display SharePoint list items. Th
 
 | Solution    | Author(s)                                               |
 | ----------- | ------------------------------------------------------- |
-| folder name | Author details (name, company, twitter alias with link) |
+| /src/ | Shushobhan Nath, Senior Web Developer |
 
 ## Version history
 
