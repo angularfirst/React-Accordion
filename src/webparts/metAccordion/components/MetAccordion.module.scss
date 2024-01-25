@@ -1,11 +1,64 @@
 @import '~@fluentui/react/dist/sass/References.scss';
 @import '~@microsoft/sp-office-ui-fabric-core/dist/sass/SPFabricCore.scss';
 
+@mixin font-size($size) {
+  font-size: $size;
+  font-size: calculateRem($size);
+}
+
 .metAccordion {
   .container {
     max-width: 700px;
     margin: 0px auto;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .headerSection{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+  }
+
+  .accTitle {
+    font-size: 18px;
+    font-weight: 500;
+    color: #007ABC;
+    text-decoration: none;
+  }
+
+  .plusMinus {
+    width: 22px;
+    height: 22px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+  }
+
+  .plusIcon {
+    background-image: url('data:image/svg+xml,<svg viewBox="0 0 16 16" fill="%23007ABC" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z" clip-rule="evenodd"/></svg>');
+    transform: scale(.7) !important;
+  }
+
+  .minusIcon {
+    background-image: url('data:image/svg+xml,<svg viewBox="0 0 16 16" fill="%23007ABC" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z" clip-rule="evenodd"/></svg>');
+    transform: scale(.7) !important;
+  }
+
+  .accHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    margin-bottom: 0;
+    background-color: #f4f4f4;
+  }
+
+  .headerTitle{
+    @include ms-font-xxl;
+    @include font-size(28px);
+    @include ms-fontColor-black;
   }
 
   .row {
@@ -36,6 +89,10 @@
   .description {
     @include ms-font-l;
     @include ms-fontColor-white;
+  }
+
+  .card{
+    border-radius: 0px!important;
   }
 
   .button {

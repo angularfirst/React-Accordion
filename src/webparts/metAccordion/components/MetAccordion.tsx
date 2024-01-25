@@ -8,14 +8,16 @@ import { Caching } from '@pnp/queryable';
 import { Placeholder } from '@pnp/spfx-controls-react';
 import './metAccordion.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Collapse }  from 'react-collapse';
 
-import { Accordion, Button } from 'react-bootstrap';
+import { Accordion, Card } from 'react-bootstrap';
 
 import { spfi, SPFI } from '@pnp/sp';
 import { getSP } from '../../../pnpjsConfig';
 
 export interface IMetAccordionState{
   items: Array<any>;
+  isExpanded: boolean;
 }
 
 export default class MetAccordion extends React.Component<IMetAccordionProps, IMetAccordionState> {
@@ -27,26 +29,45 @@ export default class MetAccordion extends React.Component<IMetAccordionProps, IM
     super(props);
     this.state = {
       items: [],
+      isExpanded: false,
     };
     
     this._sp = getSP();
   }
 
   private toggleExpandCollapse = (): void => {
-    this.setState(prevState => {
-      items: prevState.items.map(item => ({...item, isOpen: !item.isOpen}));
-    });
+    const isExpanded = !this.state.isExpanded;
+    this.setState({ isExpanded });
+    this.updateUrl(isExpanded);
+  };
+
+  private updateUrl(isExpanded: boolean): void {
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('expand', isExpanded.toString());
+    const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
+    window.history.pushState({ path: newUrl }, '', newUrl);
+  }
+
+  private getExpandedStateFromUrl(): boolean {
+    const urlParams = new URLSearchParams (window.location.search);
+    return urlParams.get('expand') === 'true';
+  }
+
+  private handleItemClick = (index: number): void => {
+    const newItems = [...this.state.items];
+    newItems[index].isOpen = !newItems[index].isOpen;
+    this.setState({ items: newItems });
   };
 
   public componentDidMount(): void {
-    this.getListItems(); 
+    this.getListItems();
+    const isExpanded = this.getExpandedStateFromUrl();
+    this.setState({ isExpanded }); 
   }
 
   private async getListItems(): Promise<void>{
     const spCache = spfi(this._sp).using(Caching({ store: "session" }));
-    // const listid = this.props.listID;
-    // console.log("LIST ID GOT IS :" + listid);
-
+    
     if(typeof this.props.listID !== "undefined" && this.props.listID.length > 0){
       try {
         const list = spCache.web.lists.getById(this.props.listID)
@@ -61,9 +82,14 @@ export default class MetAccordion extends React.Component<IMetAccordionProps, IM
       }
     }
 
-  public componentDidUpdate(prevProps: IMetAccordionProps): void {
+  public componentDidUpdate(prevProps: IMetAccordionProps, prevState: IMetAccordionState): void {
     if(prevProps.listID !== this.props.listID) {
       this.getListItems();
+    }
+
+    if (prevState.isExpanded !== this.state.isExpanded) {
+      const newItems = this.state.items.map(item => ({ ...item, isOpen: this.state.isExpanded }));
+      this.setState({ items: newItems });
     }
   }
 
@@ -71,6 +97,8 @@ export default class MetAccordion extends React.Component<IMetAccordionProps, IM
     
     let listSelected:boolean = typeof this.props.listID !== "undefined" && this.props.listID.length > 0;
     //const allItemsOpen = this.state.items.every(item => item.isOpen);
+    const expandCollapseText = this.state.isExpanded ? 'Collapse All' : 'Expand All';
+    // const plusMinusText = this.state.isExpanded ? '-' : '+';
 
     return (
       <div className={`${styles.metAccordion}`}>
@@ -86,24 +114,32 @@ export default class MetAccordion extends React.Component<IMetAccordionProps, IM
         {
           listSelected &&
           <div>
-            <Button variant='primary' onClick={this.toggleExpandCollapse}>
-              Expand All
-            </Button>{' '}
-            <h2>{this.props.accordionTitle}</h2>
-            <Accordion flush>
-              {this.state.items.map((item: any, index: number) =>{
-                return(
-                  <Accordion.Item key={index} eventKey={index.toString()} className={item.isOpen ? 'open' : ''}>
-                    <Accordion.Header>
-                      {item.Title}
-                    </Accordion.Header>
-                    <Accordion.Body>
-                      <p dangerouslySetInnerHTML={{__html: item.Content}}></p>
-                    </Accordion.Body>
-                  </Accordion.Item>
-                );
-              })}
-            </Accordion>
+            <div className={styles.headerSection}>
+            <div className={styles.headerTitle}>{this.props.accordionTitle}</div>
+              <div>
+              <a href='#' onClick={this.toggleExpandCollapse}>
+                {expandCollapseText}
+              </a>{' '}
+              </div>
+            </div>
+              <Accordion flush>
+              {this.state.items.map((item: any, index: number) =>(
+                <Card key={index} className={styles.card} bg='bg-light'>
+                  <div className={styles.accHeader}>
+                    <a href='javascript:void(0);' onClick={()=> this.handleItemClick(index)} className={styles.accTitle}>
+                      { item.Title }
+                    </a>
+                    <a href='javascript:void(0);' onClick={()=> this.handleItemClick(index)} className={`${styles.plusMinus} ${item.isOpen ? styles.minusIcon : styles.plusIcon}`}>
+                    </a>{' '}
+                  </div>
+                    <Collapse isOpened={item.isOpen}>
+                      <Card.Body>
+                        <p dangerouslySetInnerHTML={{__html: item.Content}}></p>
+                      </Card.Body>
+                    </Collapse>
+                </Card>
+              ))}
+              </Accordion>
           </div>
         }
       </div>
